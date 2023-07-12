@@ -67,8 +67,8 @@ namespace AGROTISTESTE
 
                         }
                     }
+                    dataGridView1.Rows.Add(linhaDados);
                 }
-                dataGridView1.Rows.Add(linhaDados);
 
             }
             catch (Exception)

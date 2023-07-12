@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            CodigoProduto = new DataGridViewTextBoxColumn();
-            DescricaoProduto = new DataGridViewTextBoxColumn();
-            PesoliquidoProduto = new DataGridViewTextBoxColumn();
-            PrecoUnitarioProduto = new DataGridViewTextBoxColumn();
             label1 = new Label();
             button1 = new Button();
             button2 = new Button();
@@ -44,32 +40,11 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { CodigoProduto, DescricaoProduto, PesoliquidoProduto, PrecoUnitarioProduto });
             dataGridView1.Location = new Point(12, 83);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(803, 373);
             dataGridView1.TabIndex = 0;
-            // 
-            // CodigoProduto
-            // 
-            CodigoProduto.HeaderText = "Codigo";
-            CodigoProduto.Name = "CodigoProduto";
-            // 
-            // DescricaoProduto
-            // 
-            DescricaoProduto.HeaderText = "Descricao";
-            DescricaoProduto.Name = "DescricaoProduto";
-            // 
-            // PesoliquidoProduto
-            // 
-            PesoliquidoProduto.HeaderText = "Peso Líquido ";
-            PesoliquidoProduto.Name = "PesoliquidoProduto";
-            // 
-            // PrecoUnitarioProduto
-            // 
-            PrecoUnitarioProduto.HeaderText = "Preco Unitário ";
-            PrecoUnitarioProduto.Name = "PrecoUnitarioProduto";
             // 
             // label1
             // 
@@ -99,6 +74,7 @@
             button2.TabIndex = 3;
             button2.Text = "Deletar";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += deletarItem;
             // 
             // label2
             // 

@@ -92,6 +92,12 @@ namespace AGROTISTESTE
                 "nomecliente varchar(250) not null," +
                 "precototalpedido FLOAT not null," +
                 "pesototalpedido FLOAT not null" +
+                ");" +
+                 "if not exists (select * from sysobjects where name='auxiliapedido' and xtype='U') " +
+                "create table auxiliapedido " +
+                "(" +
+                "CodigoItem varchar(64) not null," +
+                "CodigoPedido varchar(64) not null" +
                 ")", conn);
 
 
@@ -108,7 +114,7 @@ namespace AGROTISTESTE
                 await JsonSerializer.SerializeAsync(createStream, connectionString);
                 await createStream.DisposeAsync();
                 MessageBox.Show("Conexão estabelecida com sucesso");
-                TELACADASTRO tELACADASTRO = new TELACADASTRO();
+                TELACADASTRO tELACADASTRO = new TELACADASTRO("1");
                 tELACADASTRO.Show();
             }
             else
@@ -132,8 +138,20 @@ namespace AGROTISTESTE
             conn.Close();
 
 
-            TELACADASTRO tELACADASTRO = new TELACADASTRO();
+            TELACADASTRO tELACADASTRO = new TELACADASTRO("1");
             tELACADASTRO.Show();
+        }
+
+        private void acessoAjuda(object sender, EventArgs e)
+        {
+            TELADEAJUDA telaajuda = new TELADEAJUDA();
+            telaajuda.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            TELADESOBRE teladesobre = new TELADESOBRE();
+            teladesobre.Show(); 
         }
     }
 }

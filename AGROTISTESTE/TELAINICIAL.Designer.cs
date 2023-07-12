@@ -127,8 +127,9 @@
             button3.Name = "button3";
             button3.Size = new Size(75, 23);
             button3.TabIndex = 11;
-            button3.Text = "(f1) Ajuda";
+            button3.Text = " Ajuda";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += acessoAjuda;
             // 
             // label4
             // 
@@ -154,8 +155,9 @@
             button4.Name = "button4";
             button4.Size = new Size(75, 23);
             button4.TabIndex = 14;
-            button4.Text = "Versão (f9)";
+            button4.Text = "Versão ";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // TELAINICIAL
             // 

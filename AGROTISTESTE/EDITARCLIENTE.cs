@@ -48,6 +48,7 @@ namespace AGROTISTESTE
                         textBox7.Text = (string)leitor["ibge"];
                     }
                 }
+                conn.Close();
             }
             catch (Exception)
             {

@@ -1,9 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using AGROTISTESTE.Models;
+using AutoMapper;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Json;
@@ -11,16 +14,20 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AGROTISTESTE
 {
     public partial class TELACADASTRO : Form
     {
+        Random numAleatorio = new Random();
         static HttpClient client = new HttpClient();
-        public TELACADASTRO()
+        public TELACADASTRO(string? ultimopedido)
         {
             InitializeComponent();
-            SqlCommand cmd = new SqlCommand();
+            textBox14.Text = numAleatorio.Next(1, 10000).ToString();
+
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -80,7 +87,7 @@ namespace AGROTISTESTE
                 conn.Open();
                 if (conn.State != ConnectionState.Open)
                     MessageBox.Show("Problema em estabelecer conexão com o banco");
-                
+
 
                 SqlCommand cmd = new SqlCommand(@"INSERT INTO cadastrocliente(Codigo, Nome, CEP, Logradouro, Bairro, Cidade, UF, ibge)" +
                             "VALUES('" + textBox1.Text.ToString() + "','" +
@@ -164,9 +171,23 @@ namespace AGROTISTESTE
             }
             catch (Exception)
             {
+                MessageBox.Show("Houve algum problema em obter os dados do DB");
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
 
-                MessageBox.Show("Não foi possível salvar o novo item");
 
+            }
+            finally
+            {
+
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
             }
         }
 
@@ -182,8 +203,208 @@ namespace AGROTISTESTE
 
         private void button9_Click(object sender, EventArgs e)
         {
+            try
+            {
+
+                if (ValidarSeExisteProduto())
+                {
+
+
+                    string fileName = "connectionString.json";
+                    string jsonString = File.ReadAllText(fileName);
+                    ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                    SqlConnection conn = new SqlConnection(strConn.connectionString);
+                    conn.Open();
+                    if (conn.State != ConnectionState.Open)
+                        MessageBox.Show("Problema em estabelecer conexão com o banco");
+
+
+
+                    SqlCommand cmd = new SqlCommand(@"INSERT INTO auxiliapedido(CodigoItem, CodigoPedido)" +
+                              "VALUES('" + textBox17.Text.ToString() + "','" +
+                                          textBox14.Text.ToString() + "'" +
+                                           ");", conn);
+
+
+
+                    cmd.ExecuteReader();
+
+                    conn.Close();
+
+
+                    InserirEmListaProdutos();
+                    MessageBox.Show("Novo item cadastrado com sucesso!");
+                }
+                else
+                {
+                    MessageBox.Show("Não existe produto cadastradado com esse id");
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Houve algum problema em obter os dados do DB");
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+
+
+            }
+            finally
+            {
+
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+            }
+        }
+
+        private bool ValidarSeExisteProduto()
+        {
+            try
+            {
+                List<Clientes> list = new List<Clientes>();
+                List<string> resultado = new List<string>();
+
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Open();
+                if (conn.State != ConnectionState.Open)
+                    MessageBox.Show("Problema em estabelecer conexão com o banco");
+
+                SqlCommand cmd = new SqlCommand(@"select * from cadastroproduto 
+                                                    where Codigo =" + textBox17.Text.ToString(), conn);
+                var leitor = cmd.ExecuteReader();
+
+
+                if (!leitor.HasRows)
+                {
+                    conn.Close();
+                    return false;
+                }
+                conn.Close();
+                return true;
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Houve algum problema em obter os dados do DB");
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+                return false;
+
+
+            }
 
         }
+
+        private void InserirEmListaProdutos()
+        {
+            try
+            {
+                List<Clientes> list = new List<Clientes>();
+                List<string> resultado = new List<string>();
+
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Open();
+                if (conn.State != ConnectionState.Open)
+                    MessageBox.Show("Problema em estabelecer conexão com o banco");
+
+                SqlCommand cmd = new SqlCommand(@"select * from cadastroproduto as ct
+                                                    inner join auxiliapedido as ap
+                                                    on ap.CodigoItem = ct.Codigo
+                                                    where ap.CodigoPedido =" + textBox14.Text.ToString(), conn);
+                var leitor = cmd.ExecuteReader();
+
+                int nColunas = leitor.FieldCount;
+
+
+                for (int i = 0; i < nColunas; i++)
+                {
+                    dataGridView1.Columns.Add(leitor.GetName(i).ToString(), leitor.GetName(i).ToString());
+                }
+                string[] linhaDados = new string[nColunas];
+                double[] totalpreco = new double[nColunas];
+
+                while (leitor.Read())
+                {
+                    for (int a = 0; a < nColunas; a++)
+                    {
+                        //verifica o tipo de dados da coluna
+                        if (leitor.GetFieldType(a).ToString() == "System.Int32")
+                        {
+                            linhaDados[a] = leitor.GetInt32(a).ToString();
+                        }
+                        if (leitor.GetFieldType(a).ToString() == "System.Double")
+                        {
+                            linhaDados[a] = leitor.GetDouble(a).ToString();
+                            totalpreco[a] = double.Parse(leitor.GetDouble(a).ToString());
+                        }
+                        if (leitor.GetFieldType(a).ToString() == "System.String")
+                        {
+                            linhaDados[a] = leitor.GetString(a).ToString();
+                        }
+                        if (leitor.GetFieldType(a).ToString() == "System.DateTime")
+                        {
+                            linhaDados[a] = leitor.GetDateTime(a).ToString();
+                        }
+
+                    }
+
+                }
+
+                dataGridView1.Rows.Add(linhaDados);
+
+                double totalprec = 0;
+                double totalpeso = 0;
+
+                double precoatual = double.Parse(textBox19.Text.ToString() == string.Empty ? "0" : textBox19.Text);
+                double pesototal = double.Parse(textBox18.Text.ToString() == string.Empty ? "0" : textBox18.Text);
+
+                for (int i = 0; i < linhaDados.GetLength(0); i++)
+                {
+                    totalpeso = +pesototal + double.Parse(linhaDados[2]);
+                    totalprec = +precoatual + double.Parse(linhaDados[3]);
+                }
+
+                textBox19.Text = totalprec.ToString("F");
+                textBox18.Text = totalpeso.ToString("F");
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Houve algum problema em obter os dados do DB");
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+
+            }
+            finally
+            {
+
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+            }
+        }
+
 
         private void controleClientes(object sender, EventArgs e)
         {
@@ -202,6 +423,132 @@ namespace AGROTISTESTE
             CONTROLEPEDIDO controlepedido = new CONTROLEPEDIDO();
             controlepedido.Show();
 
+        }
+
+        private void buscarCliente(object sender, EventArgs e)
+        {
+            try
+            {
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Open();
+                if (conn.State != ConnectionState.Open)
+                    MessageBox.Show("Problema em estabelecer conexão com o banco");
+
+                SqlCommand cmd = new SqlCommand(@"select * from cadastrocliente where Codigo = " + textBox15.Text, conn);
+                var leitor = cmd.ExecuteReader();
+
+                while (leitor.Read())
+                {
+                    if (leitor.HasRows)
+                    {
+                        textBox16.Text = (string)leitor["Nome"];
+                    }
+                }
+
+
+                conn.Close();
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Houve algum problema em obter os dados do DB");
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+            }
+            finally
+            {
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+            }
+        }
+
+        private void textBox17_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void finalizaPedido(object sender, EventArgs e)
+        {
+            try
+            {
+
+               
+
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Open();
+                if (conn.State != ConnectionState.Open)
+                    MessageBox.Show("Problema em estabelecer conexão com o banco");
+
+
+                double pesoliquidototal = double.Parse(textBox19.Text.ToString().Replace(",","."), NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
+                double precototal = double.Parse(textBox18.Text.ToString().Replace(",", "."), NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"));
+
+
+
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO colocacaopedidos(Codigo, dataemissao, codigocliente, nomecliente, precototalpedido, pesototalpedido)" +
+                            "VALUES('" + textBox14.Text.ToString() + "','" +
+                                        DateTime.Parse(dateTimePicker2.Text).ToString("dd-MM-yyyy HH:mm:ss") + "','" +
+                                        textBox15.Text.ToString() + "','" +
+                                        textBox16.Text.ToString() + "'," +
+                                        pesoliquidototal.ToString(CultureInfo.InvariantCulture) + "," +
+                                        precototal.ToString(CultureInfo.InvariantCulture) +
+                                        ");", conn);
+
+
+               
+
+                cmd.ExecuteReader();
+
+                textBox14.Clear();
+                textBox15.Clear();
+                textBox16.Clear();
+                textBox18.Clear();
+                textBox19.Clear();
+                for (int i = 0; i < dataGridView1.RowCount; i++)
+                {
+                    dataGridView1.Rows[i].DataGridView.Columns.Clear();
+                }
+
+                conn.Close();
+
+                    MessageBox.Show("Pedido encaminhado com sucesso");
+                textBox14.Text = numAleatorio.Next(1, 10000).ToString();
+
+
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Houve algum problema em obter os dados do DB");
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+
+
+            }
+            finally
+            {
+
+                string fileName = "connectionString.json";
+                string jsonString = File.ReadAllText(fileName);
+                ConnectionString strConn = JsonSerializer.Deserialize<ConnectionString>(jsonString);
+                SqlConnection conn = new SqlConnection(strConn.connectionString);
+                conn.Close();
+            }
         }
     }
 }

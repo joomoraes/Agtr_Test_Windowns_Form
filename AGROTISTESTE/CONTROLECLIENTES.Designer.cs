@@ -29,14 +29,6 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            CodigoCliente = new DataGridViewTextBoxColumn();
-            NomeCliente = new DataGridViewTextBoxColumn();
-            CEP = new DataGridViewTextBoxColumn();
-            Logradouro = new DataGridViewTextBoxColumn();
-            Bairro = new DataGridViewTextBoxColumn();
-            Cidade = new DataGridViewTextBoxColumn();
-            UF = new DataGridViewTextBoxColumn();
-            IBGE = new DataGridViewTextBoxColumn();
             label1 = new Label();
             button1 = new Button();
             button2 = new Button();
@@ -48,52 +40,11 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { CodigoCliente, NomeCliente, CEP, Logradouro, Bairro, Cidade, UF, IBGE });
             dataGridView1.Location = new Point(13, 88);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(860, 476);
             dataGridView1.TabIndex = 2;
-            // 
-            // CodigoCliente
-            // 
-            CodigoCliente.HeaderText = "Codigo";
-            CodigoCliente.Name = "CodigoCliente";
-            // 
-            // NomeCliente
-            // 
-            NomeCliente.HeaderText = "Nome";
-            NomeCliente.Name = "NomeCliente";
-            // 
-            // CEP
-            // 
-            CEP.HeaderText = "CEP";
-            CEP.Name = "CEP";
-            // 
-            // Logradouro
-            // 
-            Logradouro.HeaderText = "Logradouro";
-            Logradouro.Name = "Logradouro";
-            // 
-            // Bairro
-            // 
-            Bairro.HeaderText = "Bairro";
-            Bairro.Name = "Bairro";
-            // 
-            // Cidade
-            // 
-            Cidade.HeaderText = "Cidade";
-            Cidade.Name = "Cidade";
-            // 
-            // UF
-            // 
-            UF.HeaderText = "UF";
-            UF.Name = "UF";
-            // 
-            // IBGE
-            // 
-            IBGE.HeaderText = "IBGE";
-            IBGE.Name = "IBGE";
             // 
             // label1
             // 
