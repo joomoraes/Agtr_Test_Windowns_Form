@@ -79,9 +79,8 @@ namespace AGROTISTESTE
                 SqlConnection conn = new SqlConnection(strConn.connectionString);
                 conn.Open();
                 if (conn.State != ConnectionState.Open)
-                {
                     MessageBox.Show("Problema em estabelecer conexão com o banco");
-                }
+                
 
                 SqlCommand cmd = new SqlCommand(@"INSERT INTO cadastrocliente(Codigo, Nome, CEP, Logradouro, Bairro, Cidade, UF, ibge)" +
                             "VALUES('" + textBox1.Text.ToString() + "','" +
@@ -183,6 +182,25 @@ namespace AGROTISTESTE
 
         private void button9_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void controleClientes(object sender, EventArgs e)
+        {
+            CONTROLECLIENTES controleclientes = new CONTROLECLIENTES();
+            controleclientes.Show();
+        }
+
+        private void controleItens(object sender, EventArgs e)
+        {
+            CONTROLEITENS controleitens = new CONTROLEITENS();
+            controleitens.Show();
+        }
+
+        private void controlePedidos(object sender, EventArgs e)
+        {
+            CONTROLEPEDIDO controlepedido = new CONTROLEPEDIDO();
+            controlepedido.Show();
 
         }
     }

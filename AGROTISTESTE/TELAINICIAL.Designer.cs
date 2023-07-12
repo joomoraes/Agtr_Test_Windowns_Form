@@ -42,6 +42,7 @@
             button3 = new Button();
             label4 = new Label();
             label5 = new Label();
+            button4 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
@@ -147,11 +148,21 @@
             label5.TabIndex = 13;
             label5.Text = "connectionString\":\"Server=localhost;Database=AGROTISTESTE;Trusted_Connection=True;TrustServerCertificate=True;";
             // 
+            // button4
+            // 
+            button4.Location = new Point(12, 41);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 14;
+            button4.Text = "Versão (f9)";
+            button4.UseVisualStyleBackColor = true;
+            // 
             // TELAINICIAL
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(869, 493);
+            Controls.Add(button4);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(button3);
@@ -186,5 +197,6 @@
         private Button button3;
         private Label label4;
         private Label label5;
+        private Button button4;
     }
 }

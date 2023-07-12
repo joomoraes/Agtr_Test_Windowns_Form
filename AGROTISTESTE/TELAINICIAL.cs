@@ -66,7 +66,7 @@ namespace AGROTISTESTE
                 "if not exists (select * from sysobjects where name='cadastrocliente' and xtype='U') " +
                 "create table cadastrocliente " +
                 "(" +
-                "Codigo varchar(64) not null," +
+                "Codigo varchar(64) not null unique," +
                 "Nome varchar(250) not null," +
                 "CEP varchar(10) not null," +
                 "Logradouro varchar(250) not null," +
@@ -78,7 +78,7 @@ namespace AGROTISTESTE
                 "if not exists (select * from sysobjects where name='cadastroproduto' and xtype='U') " +
                 "create table cadastroproduto " +
                 "(" +
-                "Codigo varchar(64) not null," +
+                "Codigo varchar(64) not null unique," +
                 "Descricao varchar(250) not null," +
                 "Pesoliquido FLOAT not null," +
                 "Precounitario FLOAT not null" +
@@ -86,7 +86,7 @@ namespace AGROTISTESTE
                 "if not exists (select * from sysobjects where name='colocacaopedidos' and xtype='U') " +
                 "create table colocacaopedidos " +
                 "(" +
-                "numerocodigopedido varchar(64) not null," +
+                "Codigo varchar(64) not null unique," +
                 "dataemissao DATETIME not null," +
                 "codigocliente integer not null," +
                 "nomecliente varchar(250) not null," +
