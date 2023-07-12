@@ -61,6 +61,17 @@
             textBox10 = new TextBox();
             label11 = new Label();
             tabPage3 = new TabPage();
+            button11 = new Button();
+            label19 = new Label();
+            textBox17 = new TextBox();
+            groupBox1 = new GroupBox();
+            textBox19 = new TextBox();
+            textBox18 = new TextBox();
+            label21 = new Label();
+            label20 = new Label();
+            button9 = new Button();
+            button8 = new Button();
+            button7 = new Button();
             dataGridView1 = new DataGridView();
             label18 = new Label();
             textBox16 = new TextBox();
@@ -75,18 +86,12 @@
             label1 = new Label();
             button4 = new Button();
             button5 = new Button();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            button7 = new Button();
-            button8 = new Button();
-            button9 = new Button();
-            groupBox1 = new GroupBox();
+            button10 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
+            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -409,6 +414,9 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(button11);
+            tabPage3.Controls.Add(label19);
+            tabPage3.Controls.Add(textBox17);
             tabPage3.Controls.Add(groupBox1);
             tabPage3.Controls.Add(button9);
             tabPage3.Controls.Add(button8);
@@ -431,10 +439,113 @@
             tabPage3.Text = "COLOCAÇÃO DE PEDIDOS";
             tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button11
+            // 
+            button11.Location = new Point(275, 136);
+            button11.Name = "button11";
+            button11.Size = new Size(75, 23);
+            button11.TabIndex = 17;
+            button11.Text = "Remover";
+            button11.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label19.Location = new Point(470, 140);
+            label19.Name = "label19";
+            label19.Size = new Size(153, 15);
+            label19.TabIndex = 16;
+            label19.Text = "Insira o Código do Produto";
+            // 
+            // textBox17
+            // 
+            textBox17.Location = new Point(363, 137);
+            textBox17.Name = "textBox17";
+            textBox17.Size = new Size(100, 23);
+            textBox17.TabIndex = 15;
+            textBox17.TextChanged += textBox17_TextChanged;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(textBox19);
+            groupBox1.Controls.Add(textBox18);
+            groupBox1.Controls.Add(label21);
+            groupBox1.Controls.Add(label20);
+            groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBox1.Location = new Point(670, 23);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(245, 319);
+            groupBox1.TabIndex = 14;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Detalhes Pedido ";
+            // 
+            // textBox19
+            // 
+            textBox19.Location = new Point(6, 131);
+            textBox19.Name = "textBox19";
+            textBox19.ReadOnly = true;
+            textBox19.Size = new Size(100, 23);
+            textBox19.TabIndex = 3;
+            // 
+            // textBox18
+            // 
+            textBox18.Location = new Point(6, 64);
+            textBox18.Name = "textBox18";
+            textBox18.ReadOnly = true;
+            textBox18.Size = new Size(100, 23);
+            textBox18.TabIndex = 2;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(6, 113);
+            label21.Name = "label21";
+            label21.Size = new Size(69, 15);
+            label21.TabIndex = 1;
+            label21.Text = "Preço Total";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(4, 46);
+            label20.Name = "label20";
+            label20.Size = new Size(63, 15);
+            label20.TabIndex = 0;
+            label20.Text = "Peso Total";
+            // 
+            // button9
+            // 
+            button9.Location = new Point(127, 136);
+            button9.Name = "button9";
+            button9.Size = new Size(141, 23);
+            button9.TabIndex = 13;
+            button9.Text = "Adicionar Itens";
+            button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
+            // 
+            // button8
+            // 
+            button8.Location = new Point(946, 319);
+            button8.Name = "button8";
+            button8.Size = new Size(122, 23);
+            button8.TabIndex = 12;
+            button8.Text = "Finalizar Pedido (f9)";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += finalizaPedido;
+            // 
+            // button7
+            // 
+            button7.Location = new Point(29, 136);
+            button7.Name = "button7";
+            button7.Size = new Size(75, 23);
+            button7.TabIndex = 11;
+            button7.Text = "Refresh (f5)";
+            button7.UseVisualStyleBackColor = true;
+            // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4 });
             dataGridView1.Location = new Point(29, 172);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
@@ -467,6 +578,7 @@
             button6.TabIndex = 7;
             button6.Text = "Buscar Cliente";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += buscarCliente;
             // 
             // textBox15
             // 
@@ -506,6 +618,7 @@
             // 
             textBox14.Location = new Point(29, 41);
             textBox14.Name = "textBox14";
+            textBox14.ReadOnly = true;
             textBox14.Size = new Size(100, 23);
             textBox14.TabIndex = 1;
             // 
@@ -546,6 +659,7 @@
             button4.TabIndex = 4;
             button4.Text = "Controle de Clientes";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += controleClientes;
             // 
             // button5
             // 
@@ -555,75 +669,24 @@
             button5.TabIndex = 5;
             button5.Text = "Controle de Itens";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += controleItens;
             // 
-            // Column1
+            // button10
             // 
-            Column1.HeaderText = "Código Produto";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Descrição Produto";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 250;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Peso Líquido ";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Preço Unitário ";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            // 
-            // button7
-            // 
-            button7.Location = new Point(29, 136);
-            button7.Name = "button7";
-            button7.Size = new Size(75, 23);
-            button7.TabIndex = 11;
-            button7.Text = "Refresh (f5)";
-            button7.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            button8.Location = new Point(946, 319);
-            button8.Name = "button8";
-            button8.Size = new Size(122, 23);
-            button8.TabIndex = 12;
-            button8.Text = "Finalizar Pedido (f9)";
-            button8.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            button9.Location = new Point(127, 136);
-            button9.Name = "button9";
-            button9.Size = new Size(141, 23);
-            button9.TabIndex = 13;
-            button9.Text = "Adicionar Itens";
-            button9.UseVisualStyleBackColor = true;
-            button9.Click += button9_Click;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox1.Location = new Point(670, 23);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(245, 319);
-            groupBox1.TabIndex = 14;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Detalhes Pedido ";
+            button10.Location = new Point(333, 159);
+            button10.Name = "button10";
+            button10.Size = new Size(140, 23);
+            button10.TabIndex = 6;
+            button10.Text = "Controle de Pedidos";
+            button10.UseVisualStyleBackColor = true;
+            button10.Click += controlePedidos;
             // 
             // TELACADASTRO
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1126, 604);
+            Controls.Add(button10);
             Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(label1);
@@ -638,6 +701,8 @@
             tabPage2.PerformLayout();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
@@ -693,13 +758,17 @@
         private TextBox textBox15;
         private Label label17;
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
         private Button button8;
         private Button button7;
         private Button button9;
         private GroupBox groupBox1;
+        private Button button10;
+        private TextBox textBox17;
+        private Label label19;
+        private TextBox textBox19;
+        private TextBox textBox18;
+        private Label label21;
+        private Label label20;
+        private Button button11;
     }
 }
